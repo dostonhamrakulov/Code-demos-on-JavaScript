@@ -1,0 +1,44 @@
+Semantic data modelling -- https://www.youtube.com/watch?v=edCHPQM_dGQ
+
+Database anomalies and normalization - https://beginnersbook.com/2015/05/normalization-in-dbms/
+          			       https://www.tutorialspoint.com/dbms/database_normalization.htm
+					https://www.youtube.com/watch?v=wRoABkgPocI
+					https://www.youtube.com/watch?v=o7CH1dltJVU
+					https://www.youtube.com/watch?v=kkDord54wR0	
+					https://www.youtube.com/watch?v=8E4tlNE3Veo
+					https://www.youtube.com/watch?v=z0sz9dyFGUA
+
+
+Concurrency and Transaction Management - https://www.linkedin.com/pulse/transactions-concurrency-control-dbms-thiensi-le
+                                         https://www.youtube.com/watch?v=i7LNUio7kvw
+					https://en.wikipedia.org/wiki/Concurrency_control
+					http://www.ques10.com/p/17599/what-are-the-various-concurrency-control-techniq-1/
+					https://www.slideshare.net/nishant_munjal/concurrency-control-74809795
+					https://www.youtube.com/watch?v=ELP5JKZzjLA
+					https://www.youtube.com/watch?v=BWfNjIrDcdc
+
+Transaction processing concepts -	https://www.youtube.com/watch?v=5CbMi1njxtQ
+					https://www.youtube.com/watch?v=eYQwKi7P8MM
+					https://www.youtube.com/watch?v=nRdlkQp4Pf4
+
+• Query Processing  - https://www.tutorialspoint.com/dbms_for_gate_exams/dbms_introduction_to_query_processing.asp
+                      https://www.youtube.com/watch?v=8B0uKwriP-4 
+  Query optimization - https://www.youtube.com/watch?v=9Ck-Xbyn-RU 
+                   
+
+
+
+Complex SQL - https://www.techopedia.com/definition/32181/complex-sql
+
+Storage concepts - https://www.tutorialspoint.com/dbms/dbms_storage_system.htm
+
+ Indexing structures  - https://www.tutorialspoint.com/dbms/dbms_indexing.htm
+			https://www.youtube.com/watch?v=1FuRsIJv_60
+
+Database recovery techniques - https://www.youtube.com/watch?v=HnVo3_iH76w
+				https://www.youtube.com/watch?v=495q-pDJ9zE
+				https://www.youtube.com/watch?v=EuqQeJfJbgA
+				https://www.youtube.com/watch?v=vgshV-EH7kA
+				https://www.youtube.com/watch?v=gG4bMa54slk
+				https://www.youtube.com/watch?v=H57OtQioQgA
+				https://www.youtube.com/watch?v=-yIV_vSRE3I

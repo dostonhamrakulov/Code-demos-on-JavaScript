@@ -1,0 +1,65 @@
+CREATE OR REPLACE VIEW numbers_distinct AS SELECT DISTINCT number FROM numbers ORDER BY number;
+
+CREATE OR REPLACE FUNCTION numbers_distinct_update() RETURNS TRIGGER AS $$
+  BEGIN
+    IF TG_OP = 'INSERT' THEN
+      INSERT INTO numbers VALUES (NEW.number);
+      RETURN NEW;
+    ELSIF TG_OP = 'UPDATE' THEN
+      UPDATE numbers SET number = NEW.number WHERE number = OLD.number;
+      RETURN NEW;
+    ELSIF TG_OP = 'DELETE' THEN
+      DELETE FROM numbers WHERE number = OLD.number;
+      RETURN OLD;
+    END IF;
+  END;
+$$ LANGUAGE plpgsql;
+
+
+CREATE TRIGGER numbers_distinct_change INSTEAD OF INSERT OR UPDATE OR DELETE ON numbers_distinct
+  FOR EACH ROW
+    EXECUTE PROCEDURE numbers_distinct_update();
+    
+
+CREATE OR REPLACE FUNCTION forbidden() RETURNS TRIGGER AS $$
+  BEGIN
+    RAISE feature_not_supported; -- or whatever seems appropriate for this situation
+    RETURN NULL;
+  END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER stop_modify BEFORE UPDATE OR DELETE OR TRUNCATE ON numbers_log
+  EXECUTE PROCEDURE forbidden();
+
+CREATE TRIGGER stop_modify BEFORE UPDATE OR DELETE OR TRUNCATE ON numbers_log_query
+  EXECUTE PROCEDURE forbidden();
+  
+ 
+
+CREATE TABLE IF NOT EXISTS numbers (number INTEGER NOT NULL);
+CREATE TABLE IF NOT EXISTS numbers_log (number INTEGER NOT NULL);
+CREATE TABLE IF NOT EXISTS numbers_log_query (query TEXT NOT NULL);
+
+
+CREATE OR REPLACE FUNCTION numbers_copy() RETURNS TRIGGER AS $$
+  BEGIN
+    INSERT INTO numbers_log VALUES (NEW.number);
+    RETURN NULL; -- result is ignored since this will be an AFTER trigger
+  END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER numbers_insert AFTER INSERT ON numbers
+  FOR EACH ROW
+    EXECUTE PROCEDURE numbers_copy();
+
+CREATE OR REPLACE FUNCTION numbers_query() RETURNS TRIGGER AS $$
+  BEGIN
+    INSERT INTO numbers_log_query VALUES (current_query());
+    RETURN NULL;
+  END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER numbers_alter AFTER INSERT OR UPDATE OR DELETE OR TRUNCATE ON numbers
+  FOR EACH STATEMENT
+    WHEN (pg_trigger_depth() = 0)
+      EXECUTE PROCEDURE numbers_query();

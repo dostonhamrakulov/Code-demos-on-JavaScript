@@ -1,0 +1,56 @@
+INSERT INTO names VALUES
+  ('Max', 'Mustermann', ARRAY['Maxl', 'Maxi']),       -- use can use the ARRAY constructor syntax
+  ('Erika', 'Mustermann', '{"Rikki", "Ri", "Rika"}'); -- or a literal constant to declare array values
+
+
+
+CREATE TABLE nametable OF nametype;
+
+CREATE TABLE names (LIKE nametable, nickname VARCHAR[]);
+
+
+
+DELETE FROM persons WHERE name = ('John', 'Doe')::nametype;
+
+DELETE FROM ONLY professors WHERE name = ('Jane', 'Doe')::nametype;
+
+
+CREATE TABLE professors (university VARCHAR, rank VARCHAR, salary MONEY) INHERITS (persons);
+
+WITH moved AS (DELETE FROM persons WHERE name = ('Jane', 'Doe')::nametype RETURNING *)
+  INSERT INTO professors
+    SELECT name, address, email, telephone, dateofbirth, 'Université de Lille', 'associate professor', 4000
+    FROM moved;
+
+WITH moved AS (DELETE FROM persons WHERE name = ('John', 'Doe')::nametype RETURNING *)
+  INSERT INTO professors
+    SELECT name, address, email, telephone, dateofbirth, 'Université de Lille', 'assistant professor', 3000
+    FROM moved;
+
+
+
+UPDATE persons
+  SET address = (('Rue Vincent d''Indy', '1'),
+                 ('Villeneuve-d''Ascq', '59650'), 'France'),
+      telephone = '+33 3 33 33 33 33'
+  WHERE (name).surname = 'Doe';
+  
+ 
+
+CREATE OR REPLACE FUNCTION getAge(name nametype) RETURNS INTEGER AS $$
+DECLARE
+  person persons;
+BEGIN
+  SELECT * INTO person FROM persons WHERE persons.name = getAge.name;
+  RETURN (person).age;
+END;
+$$ LANGUAGE plpgsql;
+
+SELECT (('Max', 'Mustermann')).getAge;
+
+
+CREATE OR REPLACE FUNCTION age(person persons) RETURNS INTEGER AS $$
+BEGIN 
+  RETURN EXTRACT(YEAR from AGE(person.dateofbirth));
+END;
+$$ LANGUAGE plpgsql;

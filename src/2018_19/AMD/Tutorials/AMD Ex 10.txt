@@ -1,0 +1,85 @@
+CREATE TABLE graph (
+  id SERIAL PRIMARY KEY,
+  parentid INT REFERENCES graph(id),
+  CONSTRAINT no_self_link CHECK (id <> parentid) 
+);
+
+
+CREATE OR REPLACE FUNCTION detect_cycle() RETURNS TRIGGER AS $$
+  BEGIN
+    IF EXISTS (
+      WITH RECURSIVE search_graph (parentid, path, cycle) AS (
+        SELECT NEW.parentid, ARRAY[NEW.id, NEW.parentid], (NEW.id = NEW.parentid)
+          FROM graph WHERE id = NEW.parentid
+      UNION ALL
+        SELECT graph.parentid, path || graph.parentid, graph.parentid = ANY(path)
+          FROM search_graph JOIN graph ON id = search_graph.parentid WHERE NOT cycle
+      )
+      SELECT 1 FROM search_graph WHERE cycle LIMIT 1
+    ) THEN
+      RETURN NULL;
+    END IF;
+    RETURN NEW;
+  END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER prevent_cycle BEFORE INSERT OR UPDATE ON graph
+  FOR EACH ROW
+    EXECUTE PROCEDURE detect_cycle();
+
+
+WITH RECURSIVE numbers (number) AS (
+    VALUES (1)
+  UNION ALL
+    SELECT number + 1 FROM numbers WHERE number < 100
+)
+SELECT sum(number) FROM numbers;
+
+
+CREATE TABLE IF NOT EXISTS numbers (number INTEGER NOT NULL);
+
+CREATE TABLE IF NOT EXISTS numbers_sum (number_sum INTEGER);
+
+INSERT INTO numbers_sum SELECT sum(number) FROM numbers;
+
+CREATE OR REPLACE FUNCTION numbers_sum_update() RETURNS TRIGGER AS $$
+  BEGIN
+    UPDATE numbers_sum SET number_sum = (SELECT sum(number) FROM numbers);
+    RETURN NULL;
+  END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER numbers_sum_propagate AFTER INSERT OR UPDATE OR DELETE OR TRUNCATE ON numbers
+  EXECUTE PROCEDURE numbers_sum_update();
+  
+CREATE OR REPLACE FUNCTION numbers_sum_change() RETURNS TRIGGER AS $$
+  BEGIN
+    IF TG_OP = 'INSERT' THEN
+      INSERT INTO numbers VALUES (NEW.number_sum);
+    ELSIF TG_OP = 'DELETE' THEN
+      DELETE FROM numbers WHERE number = OLD.number_sum;
+    END IF;
+    RETURN NULL; -- prevent execution on numbers_sum
+  END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER numbers_sum_alter BEFORE INSERT OR DELETE ON numbers_sum
+  FOR EACH ROW
+    EXECUTE PROCEDURE numbers_sum_change();
+    
+CREATE OR REPLACE FUNCTION numbers_sum_restore() RETURNS TRIGGER AS $$
+  BEGIN
+    INSERT INTO numbers_sum VALUES (NULL); -- restore row
+    TRUNCATE TABLE numbers; -- propagate operation to numbers
+    RETURN NULL;
+  END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER numbers_sum_truncate AFTER TRUNCATE ON numbers_sum
+  EXECUTE PROCEDURE numbers_sum_restore();
+
+CREATE TRIGGER numbers_sum_no_update BEFORE UPDATE ON numbers_sum
+  FOR EACH ROW
+    WHEN (pg_trigger_depth() = 0)
+      EXECUTE PROCEDURE numbers_sum_update();
+      

@@ -1,0 +1,74 @@
+INSERT INTO book_1nf
+  SELECT title,
+         unnest(authors),              -- unnest authors and dateymd second in main-query
+         (dateymd).year,
+         (dateymd).month,
+         (dateymd).day,
+         keyword
+  FROM (
+    SELECT title,
+           authors,
+           dateymd,
+           unnest(keywords) as keyword -- unnest keywords first in sub-query
+    FROM book_nf2
+  ) as unnestfirstlevel;               -- the sub-query has to be named but the name doesn’t matter
+ 
+
+
+CREATE TYPE datetype AS (year INTEGER, month VARCHAR, day INTEGER);
+
+CREATE TABLE book_nf2
+  (title VARCHAR, authors VARCHAR[], dateymd datetype, keywords VARCHAR[]);
+
+INSERT INTO book_nf2 
+  SELECT title,
+         array_agg(DISTINCT author),              -- DISTINCT avoids duplicate entries
+         (year, month, day)::datetype as dateymd, -- the DBMS cannot do this cast on its own
+         array_agg(DISTINCT keyword)
+  FROM book_1nf GROUP BY title, dateymd;
+
+
+
+CREATE TABLE book_1nf (title VARCHAR, author VARCHAR, year INT, month VARCHAR, day INT, keyword VARCHAR);
+
+INSERT INTO book_1nf VALUES
+  ('Selling', 'Stein', 2009, 'April', 1, 'Profit'), ('Selling', 'Stein', 2009, 'April', 1, 'Strategy'),
+  ('Selling', 'Jahn',  2009, 'April', 1, 'Profit'), ('Selling', 'Jahn',  2009, 'April', 1, 'Strategy'),
+  ('Report',  'Jahn',  2017, 'June', 14, 'Profit'), ('Report',  'Jahn',  2017, 'June', 14, 'Staff'),
+  ('Report',  'Frey',  2017, 'June', 14, 'Profit'), ('Report',  'Frey',  2017, 'June', 14, 'Staff');
+
+
+
+ALTER TABLE persons
+  ALTER email TYPE multiemailtype
+    USING ARRAY[email]::multiemailtype,
+  ALTER telephone TYPE multitelephonetype
+    USING ARRAY[telephone]::multitelephonetype;
+    
+UPDATE persons
+  SET email = email || 'Max@example.com'::VARCHAR,         -- use simple array concatenation
+      telephone = array_append(telephone, '+49 234 56789') -- or a function doing the same
+  WHERE name = ('Max', 'Mustermann')::nametype;
+
+
+
+CREATE FUNCTION enforceOneAtInTheMiddle(emails VARCHAR[]) RETURNS BOOLEAN AS $$
+DECLARE
+  email VARCHAR;
+BEGIN
+  FOREACH email IN ARRAY emails LOOP
+    IF email !~ '^[^@]+@[^@]+$' THEN
+      RETURN FALSE;
+    END IF;
+  END LOOP;
+  RETURN TRUE;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE DOMAIN multiemailtype AS VARCHAR[] CHECK(enforceOneAtInTheMiddle(value));
+
+CREATE DOMAIN multitelephonetype AS VARCHAR[];
+
+
+ALTER DOMAIN emailtype
+  ADD CHECK (value ~ '^[^@]+@[^@]+$');
