@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="../../../gallery-grid.css">
 
   <style>
-     #scroll_btn {
+    #scroll_btn {
      display: none;
      position: fixed;
      bottom: 20px;
@@ -78,7 +78,31 @@
      font-size: 25px;
      color: #000;
      }
+
+     table {
+                margin: 50px auto;
+            }
+            table, td {
+                border: 1px solid #aaa;
+                border-collapse: collapse;
+            }
+            th {
+                padding: 10px;
+                font-weight: bold;
+            }
+            td {
+                background-color: #eeeeee;
+                width: 80px;
+                height: 80px;
+            }
+            table:first-child tr td {
+                cursor: pointer;
+            }
+            td[colspan="4"]{
+                text-align:center;
+            }
   </style>
+  <script src="main.js"></script>
 
 
 
@@ -91,18 +115,18 @@
 
   <!-- side bar selectior -->
   <div class="second_menu_sel">
-     <div>
-        <h3 class="site-title">Doston Hamrakulov</h3>
-        <p class="site-description">
-           This website contains information about courses in TU Chemnitz
-        </p>
-     </div>
-     <ul>
-        <li><a href="../../../index.html" class="current"><i class="fa fa-home"></i>  Home</a></li>
-        <li><a href="#"><i class="fa fa-envelope"></i> SSE</a></li>
-        <li><a href="#Reference"><i class="fa fa-server"></i> References</a></li>
-     </ul>
-     <a href="#" class="btn_ic"><span class="fa fa-home">Menu</span></a>
+    <div>
+      <h3 class="site-title">Doston Hamrakulov</h3>
+      <p class="site-description">
+        This website contains information about courses in TU Chemnitz
+      </p>
+    </div>
+    <ul>
+      <li><a href="../../../index.html" class="current"><i class="fa fa-home"></i> Home</a></li>
+      <li><a href="#"><i class="fa fa-envelope"></i> SSE</a></li>
+      <li><a href="#Reference"><i class="fa fa-server"></i> References</a></li>
+    </ul>
+    <a href="#" class="btn_ic"><span class="fa fa-home">Menu</span></a>
   </div>
 
 
@@ -112,37 +136,56 @@
   <div class="container gallery-container" style="margin-top: 50px">
     <div class="tz-gallery section">
       <div class="row">
-        <h1 style="text-align:center;">Web Engineering 2018/2019</h1>
-        <p class="page-description text-center">Doston Hamrakulov<br>06.01.2018</p>
-        <h3 style="text-align:center;">Software Service Engineering</h3>
-      </div>
-      <div class="row">
-        <h1>Table of contents</h1>
-        <div class="list-group">
-          <a href="#" class="list-group-item disabled">1. Lectures</a>
-          <a href="Lectures/1/" class="list-group-item">1. Lecture_1</a>
-          <a href="Lectures/2/" class="list-group-item">2. Lecture_2</a>
-          <a href="Lectures/3/" class="list-group-item">3. Lecture_3</a>
-          <a href="Lectures/4/" class="list-group-item">4. Lecture_4</a>
-          <a href="Lectures/5/" class="list-group-item">5. Lecture_5</a>
-          <a href="Lectures/6/" class="list-group-item">6. Lecture_6</a>
-          <a href="Lectures/7/" class="list-group-item">7. Lecture_7</a>
-          <a href="Lectures/8/" class="list-group-item">8. Lecture_8</a>
-          <a href="Lectures/9/" class="list-group-item">9. Lecture_9</a>
-          <a href="Lectures/10/" class="list-group-item">10. Lecture_10</a>
-          <a href="Lectures/11/" class="list-group-item">11. Lecture_11</a>
+        <table>
+          <tbody>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+        <table>
+          <thead>
+            <tr>
+              <th colspan="4">Fill a field:</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Text: <br /><input type="text" id="text" value="Some text"></td>
+              <td>Field X: <br /><input type="text" id="field_x" value="2"></td>
+              <td>Field Y: <br /><input type="text" id="field_y" value="2"></td>
+              <td>CSS: <br /><input type="text" id="css" value="background-color:green;"></td>
+            </tr>
+            <tr>
+              <td colspan="4"><button id="mybutton">Fill</button></td>
+            </tr>
+          </tbody>
+        </table>
 
-          <a href="#chap_two_two" class="list-group-item disabled">2. Tutorials</a>
-          <a href="Tutorials/1/" class="list-group-item">1. Lecture_1</a>
-          <a href="Tutorials/2/" class="list-group-item">2. Lecture_2</a>
-          <a href="Tutorials/3/" class="list-group-item">3. Lecture_3</a>
-          <a href="Tutorials/4/" class="list-group-item">4. Lecture_4</a>
-          <a href="Tutorials/5/" class="list-group-item">5. Lecture_5</a>
-          <a href="Tutorials/6/" class="list-group-item">6. Lecture_6</a>
-          <a href="Tutorials/7/" class="list-group-item">7. Lecture_7</a>
-          <a href="#Reference" class="list-group-item">Reference</a>
-        </div>
+
       </div>
+
     </div>
   </div>
 
@@ -167,20 +210,22 @@
     baguetteBox.run('.tz-gallery');
 
     // When the user scrolls down 20px from the top of the document, show the button
-    window.onscroll = function() {scrollFunction()};
+    window.onscroll = function() {
+      scrollFunction()
+    };
 
     function scrollFunction() {
-        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-            document.getElementById("scroll_btn").style.display = "block";
-        } else {
-            document.getElementById("scroll_btn").style.display = "none";
-        }
+      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        document.getElementById("scroll_btn").style.display = "block";
+      } else {
+        document.getElementById("scroll_btn").style.display = "none";
+      }
     }
 
     // When the user clicks on the button, scroll to the top of the document
     function topFunction() {
-        document.body.scrollTop = 0;
-        document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
     }
   </script>
 
