@@ -1,15 +1,22 @@
-# Doston Hamrakulov
+## Code demos in JavaScript, DOM, HTML, CSS, and PHP
 
-## Master's Degree in Web Engineering at Chemnitz University of Technology
+**Description:**
+This repository contains code implementation of JavaScript, DOM, ect. with live demos on the web. Look at a example and live demo.
 
-## Academic year 2018/19 - course materials.
+**<a href="https://javascript-example-1.firebaseapp.com">Live Demo</a>**
+
+### Programming languages and frameworks
+```[JavaScript, HTML]
+JavaScript
+```
+
+### IDE
+```[Atom]
+Atom
+```
 
 ## Author
 **Doston Hamrakulov**
+>*Software Engineer, Web Developer, Freelancer*
 
->*Computer Systems, Riga Technical University, Riga, Latvia*
->*Web Engineering, Chemnitz University of Technology, Germany*
-
-
-
-[kulgu.ga](http://kulgu.ga/)
+**Enjoy open-source community**
