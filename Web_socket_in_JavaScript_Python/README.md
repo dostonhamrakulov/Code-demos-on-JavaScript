@@ -1,5 +1,10 @@
 # Working with Sockets & WebSockets
 
+There are two files:
+* Not_splited_Engine_control.html file which contains Enginee Control with the power of WebSocket
+* Engine.html and Control.html files which contains Enginee and control with WebSocket.
+
+The task was to split Not_splited_Engine_control.html into two "Engine.html and Control.html" so that we are able to control Engine.html with Control.html using WebSocket.
 
 ### Implemented the following functionality using WebSockets:
 
@@ -11,12 +16,12 @@
 
 ### Requirements
 In order to make operation on images, we need to install PyPDF2 library
-* JavaScript
-* HTML
-* HTML DOM
+* JavaScript, Python
+* HTML, HTML DOM
+* Socket and WebSocket
 
 
-**<a href="https://javascript-example-1.firebaseapp.com/DOM/">Live Demo</a>**
+**<a href="https://javascript-example-1.firebaseapp.com/Web_socket_in_JavaScript_Python/">Live Demo</a>**
 
 ### Programming languages and frameworks
 ```[JavaScript, HTML]
