@@ -16,7 +16,7 @@ In order to make operation on images, we need to install PyPDF2 library
 * HTML DOM
 
 
-**<a href="https://javascript-example-1.firebaseapp.com/src/DOM/">Live Demo</a>**
+**<a href="https://javascript-example-1.firebaseapp.com/DOM/">Live Demo</a>**
 
 ### Programming languages and frameworks
 ```[JavaScript, HTML]
