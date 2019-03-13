@@ -23,9 +23,17 @@ In order to make operation on images, we need to install PyPDF2 library
 
 **<a href="https://javascript-example-1.firebaseapp.com/Web_socket_in_JavaScript_Python/">Live Demo</a>**
 
+
+**Before splitting**
+<p align="center"><img width="300px" height="450px" src="https://github.com/dostonhamrakulov/Code-demos-on-JavaScript/blob/master/Web_socket_in_JavaScript_Python/not_splited.png" /></p>
+
+
+**After splitting**
+<p align="center"><img width="400px" height="400px" src="https://github.com/dostonhamrakulov/Code-demos-on-JavaScript/blob/master/Web_socket_in_JavaScript_Python/image_splited.jpg" /></p>
+
 ### Programming languages and frameworks
 ```[JavaScript, HTML]
-JavaScript
+JavaScript, Python
 ```
 
 ### IDE
