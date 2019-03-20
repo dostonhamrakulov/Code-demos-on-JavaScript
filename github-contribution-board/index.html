@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
 
-    <style>
-      table {
+<head>
+  <meta charset="utf-8">
+  <title></title>
+
+  <style>
+    table {
         font-size: 20px;
         border: solid black 2px;
         margin:50px;
@@ -22,25 +23,55 @@
       }
 
     </style>
-  </head>
-  <body>
 
-<table>
-  <thead>
-    <th>Head</th>
-  </thead>
-  <tbody>
-    <td>Body</td>
-    <td>Body</td>
-    <td>Body</td>
-    <td>Body</td>
-    <td>Body</td>
-    <td>Body</td>
-    <td>Body</td>
-    <td>Body</td>
-    <td>Body</td>
-    <td>Body</td>
-  </tbody>
-</table>
-  </body>
+
+</head>
+
+<body>
+
+  <div id="myDynamicTable">
+
+  </div>
+
+  <script type="text/javascript">
+    function addTable() {
+      var myTableDiv = document.getElementById("myDynamicTable");
+
+      var table = document.createElement('TABLE');
+      table.border = '1';
+
+      var tableBody = document.createElement('TBODY');
+      table.appendChild(tableBody);
+
+      var day = 1;
+      for (var i = 0; i < 7; i++) {
+        var tr = document.createElement('TR');
+        tableBody.appendChild(tr);
+
+        for (var j = 0; j < 52; j++) {
+          var td = document.createElement('TD');
+          td.width = '25';
+          // if (j==1){
+          //   td.appendChild(document.createTextNode(j*i));
+          //   tr.appendChild(td);
+          // } else if (j > 100) {
+          //
+          // } else {
+          //
+          // }
+          td.appendChild(document.createTextNode(day));
+          tr.appendChild(td);
+          day += 7;
+
+        }
+        // day = 1;
+        day = i+2;
+      }
+
+      myTableDiv.appendChild(table);
+    }
+    addTable();
+  </script>
+</body>
+
 </html>
