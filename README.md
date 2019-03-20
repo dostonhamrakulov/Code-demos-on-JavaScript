@@ -3,6 +3,12 @@
 **Description:**
 This repository contains code implementation of JavaScript, DOM, ect. with live demos on the web. Look at a example and live demo.
 
+* Working with Web Sockets in JavaScript
+* Working DOM - Document Object Moodel with example
+* code
+
+
+
 **<a href="https://javascript-example-1.firebaseapp.com">Live Demo</a>**
 
 ### Programming languages and frameworks
