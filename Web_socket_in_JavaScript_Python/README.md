@@ -20,9 +20,10 @@ In order to make operation on images, we need to install PyPDF2 library
 * HTML, HTML DOM
 * Socket and WebSocket
 
-
+### Live demos
 **<a href="https://javascript-example-1.firebaseapp.com/Web_socket_in_JavaScript_Python/">Live Demo</a>**
 
+**<a href="https://doston.xyz/">doston.xyz</a>**
 
 **Before splitting**
 <p align="center"><img width="300px" height="450px" src="https://github.com/dostonhamrakulov/Code-demos-on-JavaScript/blob/master/Web_socket_in_JavaScript_Python/not_splited.png" /></p>
@@ -46,4 +47,3 @@ Atom
 >*Software Engineer, Web Developer, Freelancer*
 
 **Enjoy open-source community**
-

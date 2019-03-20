@@ -8,8 +8,10 @@ This repository contains code implementation of JavaScript, DOM, ect. with live 
 * code
 
 
-
+### Live demos
 **<a href="https://javascript-example-1.firebaseapp.com">Live Demo</a>**
+
+**<a href="https://doston.xyz/">doston.xyz</a>**
 
 ### Programming languages and frameworks
 ```[JavaScript, HTML]
